@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101114">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Studio Esteban — Instagram</title>
+<style>
+:root{--bg:#101114;--panel:#191b20;--panel2:#22252c;--text:#f4f4f5;--muted:#a5a7b0;--line:#30333b;--lime:#c7f36b;--blue:#8eb7ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#242a31 0,#101114 55%);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;padding:22px 16px 44px}
+.wrap{max-width:720px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.brand{font-size:12px;letter-spacing:.16em;color:var(--lime);font-weight:800}.month{color:var(--muted);font-size:12px}
+h1{font-size:34px;line-height:1.03;margin:10px 0 8px;letter-spacing:-.04em}.sub{color:var(--muted);margin:0 0 20px}
+.hero{background:linear-gradient(135deg,#252a31,#1a1d22);border:1px solid #3a4048;border-radius:24px;padding:20px;margin-bottom:16px}
+.stats{display:flex;justify-content:space-between;align-items:end;gap:10px}.big{font-size:38px;font-weight:800;letter-spacing:-.05em}.small{font-size:12px;color:var(--muted)}.bar{height:9px;background:#3a3e46;border-radius:99px;overflow:hidden;margin:14px 0 8px}.fill{height:100%;width:0;background:var(--lime);border-radius:99px;transition:width .25s}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.btn{border:1px solid var(--line);background:#262a31;color:var(--text);border-radius:12px;padding:10px 13px;font-weight:650;font-size:13px}.btn.primary{background:var(--lime);color:#151711;border-color:var(--lime)}
+.phase{background:rgba(25,27,32,.94);border:1px solid var(--line);border-radius:19px;padding:16px;margin:12px 0}.phasehead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.phase h2{font-size:16px;margin:0}.count{font-size:11px;color:var(--muted);background:var(--panel2);padding:5px 8px;border-radius:99px}
+.task{display:flex;gap:12px;align-items:flex-start;padding:12px 2px;border-top:1px solid #2b2e35}.task input{appearance:none;flex:0 0 21px;width:21px;height:21px;border:1.5px solid #626874;border-radius:7px;margin:1px 0 0;background:transparent}.task input:checked{background:var(--lime);border-color:var(--lime)}.task input:checked:after{content:"✓";display:block;color:#151711;text-align:center;font-weight:900;line-height:19px}.task label{flex:1}.task.done label{text-decoration:line-through;color:#777c86}
+.note{color:var(--muted);font-size:12px;margin-top:15px}.reminder{background:#1d2420;border:1px solid #3d5140;border-radius:18px;padding:16px;margin-top:14px}.reminder strong{color:var(--lime)}input[type=time]{background:#111;color:white;border:1px solid var(--line);padding:8px;border-radius:9px;margin:0 8px}
+footer{color:#777c86;text-align:center;font-size:11px;margin-top:25px}
+@media(min-width:600px){body{padding-top:36px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.phase{margin:0}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="top"><div class="brand">ESTEBAN TILLON · CREATOR STUDIO</div><div class="month">NOVEMBRE · PRÉ-LANCEMENT</div></div>
+<h1>On prépare<br>le terrain.</h1><p class="sub">Ton espace de production Instagram · objectif : être prêt pour décembre.</p>
+<section class="hero">
+ <div class="stats"><div><div class="small">AVANCEMENT GLOBAL</div><div class="big" id="pct">0%</div></div><div style="text-align:right"><div class="big" id="done">0/13</div><div class="small">TÂCHES TERMINÉES</div></div></div>
+ <div class="bar"><div class="fill" id="fill"></div></div><div class="small" id="motiv">Chaque tâche terminée te rapproche du lancement.</div>
+ <div class="actions"><button class="btn primary" id="ics">Ajouter les rappels au calendrier</button><button class="btn" id="reset">Réinitialiser</button></div>
+</section>
+<div class="grid" id="tasks"></div>
+<section class="reminder">
+ <strong>Rappel de production</strong>
+ <p class="small">Choisis une heure pour ton rappel quotidien. Le calendrier Android est le moyen le plus fiable pour recevoir une notification même lorsque cette page est fermée.</p>
+ <label class="small">Heure souhaitée <input type="time" id="remTime" value="18:00"></label>
+ <button class="btn primary" id="saveReminder">Créer les rappels</button>
+ <p class="note" id="remStatus">Les rappels seront ajoutés dans un fichier calendrier à importer sur ton téléphone.</p>
+</section>
+<p class="note">Ta progression est conservée sur cet appareil et dans ce navigateur. Pour retrouver cette checklist sur l'écran d'accueil, cette mini-application devra être hébergée en HTTPS puis ajoutée à l'écran d'accueil.</p>
+<footer>STUDIO ESTEBAN · BUILD YOUR CONTENT SYSTEM</footer>
+</main>
+<script>
+const phases=[
+["01 · PRÉPARATION",["Définir l'identité visuelle des trois séries","Valider les sujets des 8 premiers compléments","Valider les 8 premiers exercices","Créer les modèles de scripts"]],
+["02 · RECHERCHE & ÉCRITURE",["Rechercher les sources scientifiques","Écrire les 8 scripts éducatifs"]],
+["03 · TOURNAGE",["Tourner les vidéos compléments","Tourner les vidéos machines","Tourner les séquences posing"]],
+["04 · MONTAGE",["Monter les premiers Reels","Créer les couvertures et sous-titres","Rédiger les légendes et CTA"]],
+["05 · LANCEMENT",["Programmer les publications de décembre"]]
+];
+const all=phases.flatMap(p=>p[1]);const key="esteban_ig_november_v1";
+let checked=JSON.parse(localStorage.getItem(key)||"[]");
+function render(){let n=checked.length;document.getElementById("done").textContent=n+"/"+all.length;document.getElementById("pct").textContent=Math.round(n/all.length*100)+"%";document.getElementById("fill").style.width=(n/all.length*100)+"%";document.getElementById("motiv").textContent=n===all.length?"Tout est prêt. Place au lancement !":n>=9?"Belle avancée : termine les derniers détails.":n>=4?"Le système prend forme. Continue !":"Chaque tâche terminée te rapproche du lancement.";let root=document.getElementById("tasks");root.innerHTML="";phases.forEach(([name,items])=>{let sec=document.createElement("section");sec.className="phase";let count=items.filter(x=>checked.includes(x)).length;sec.innerHTML=`<div class="phasehead"><h2>${name}</h2><span class="count">${count}/${items.length}</span></div>`;items.forEach((t,i)=>{let id="t"+all.indexOf(t);let row=document.createElement("div");row.className="task"+(checked.includes(t)?" done":"");row.innerHTML=`<input type="checkbox" id="${id}" ${checked.includes(t)?"checked":""}><label for="${id}"></label>`;row.querySelector("label").textContent=t;row.querySelector("input").addEventListener("change",e=>{checked=e.target.checked?[...checked,t]:checked.filter(x=>x!==t);localStorage.setItem(key,JSON.stringify(checked));render()});sec.appendChild(row)});root.appendChild(sec)})}
+document.getElementById("reset").onclick=()=>{if(confirm("Réinitialiser toute la checklist ?")){checked=[];localStorage.setItem(key,"[]");render()}};
+function makeICS(time){let [h,m]=time.split(":").map(Number);let lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Studio Esteban//Instagram November//FR","CALSCALE:GREGORIAN"];let start=new Date(2026,10,6,h,m);for(let i=0;i<25;i++){let d=new Date(start);d.setDate(start.getDate()+i);let fmt=x=>x.getFullYear()+String(x.getMonth()+1).padStart(2,"0")+String(x.getDate()).padStart(2,"0")+"T"+String(x.getHours()).padStart(2,"0")+String(x.getMinutes()).padStart(2,"0")+"00";let end=new Date(d.getTime()+10*60000);lines.push("BEGIN:VEVENT","UID:esteban-ig-"+i+"@studio","DTSTAMP:20261105T100000Z","DTSTART:"+fmt(d),"DTEND:"+fmt(end),"SUMMARY:Instagram — avancer sur la checklist","DESCRIPTION:Ouvre ta checklist Studio Esteban et termine une tâche de préparation pour décembre.","BEGIN:VALARM","TRIGGER:-PT0M","ACTION:DISPLAY","DESCRIPTION:Rappel production Instagram","END:VALARM","END:VEVENT")}lines.push("END:VCALENDAR");let blob=new Blob([lines.join("\r\n")],{type:"text/calendar"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="rappels-instagram-esteban.ics";a.click();URL.revokeObjectURL(a.href)}
+document.getElementById("ics").onclick=()=>makeICS(document.getElementById("remTime").value);
+document.getElementById("saveReminder").onclick=()=>{makeICS(document.getElementById("remTime").value);document.getElementById("remStatus").textContent="Fichier calendrier créé. Ouvre-le sur Android et importe les événements dans ton calendrier."};
+render();
+if("serviceWorker" in navigator && location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script></body></html>
